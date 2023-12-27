@@ -1,7 +1,8 @@
-﻿using System.Linq.Expressions;
+﻿using MLBSimulator;
+using System.Linq.Expressions;
 
-string version = "0.1";
-DateTime lastUpdated = new DateTime(2023, 12, 24);
+string version = "0.2";
+DateTime lastUpdated = new DateTime(2023, 12, 27);
 
 static void printVer(string ver, DateTime lastUpdate)
 {
@@ -10,4 +11,19 @@ static void printVer(string ver, DateTime lastUpdate)
     Console.WriteLine("- Created by Ryan Rosenkoetter.");
 }
 
+static Team[] populateTeams(string fileName, int numOfTeams)
+{
+    Team[] MLBTeams = new Team[numOfTeams];
+    StreamReader sr = new StreamReader(fileName);
+    int count = 0;
+    while(!sr.EndOfStream)
+    {
+        string line = sr.ReadLine();
+        string[] components = line.Split(',');
+        MLBTeams[count++] = new Team(components[0], components[1], components[3], components[2], Convert.ToInt32(components[4]));
+    }
+    return MLBTeams;
+}
+
 printVer(version, lastUpdated);
+populateTeams(@"..\..\..\Teams.txt", 30);

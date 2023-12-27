@@ -1,0 +1,30 @@
+New York,Yankees,NYY,ALEast,1520
+Boston,Red Sox,BOS,ALEast,1510
+Toronto,Blue Jays,TOR,ALEast,1535
+Tampa Bay,Rays,TBR,ALEast,1540
+Baltimore,Orioles,BAL,ALEast,1548
+Minnesota,Twins,MIN,ALCentral,1525
+Detroit,Tigers,DET,ALCentral,1495
+Chicago,White Sox,CWS,ALCentral,1450
+Cleveland,Guardians,CLE,ALCentral,1485
+Kansas City,Royals,KCR,ALCentral,1475
+Texas,Rangers,TEX,ALWest,1550
+Houston,Astros,HOU,ALWest,1550
+Seattle,Mariners,SEA,ALWest,1525
+Los Angeles,Angels,LAA,ALWest,1460
+Oakland,Athletics,OAK,ALWest,1440
+Atlanta,Braves,ATL,NLEast,1560
+Philadelphia,Phillies,PHI,NLEast,1540
+New York,Mets,NYM,NLEast,1510
+Miami,Marlins,MIA,NLEast,1505
+Washington,Nationals,WAS,NLEast,1460
+Milwaukee,Brewers,MIL,NLCentral,1530
+Chicago,Cubs,CHC,NLCentral,1500
+Cincinnati,Reds,CIN,NLCentral,1510
+Pittsburgh,Pirates,PIT,NLCentral,1475
+St. Louis,Cardinals,STL,NLCentral,1465
+Los Angeles,Dodgers,LAD,NLWest,1575
+Arizona,Diamondbacks,ARI,NLWest,1530
+San Diego,Padres,SDP,NLWest,1530
+San Francisco,Giants,SFG,NLWest,1490
+Colorado,Rockies,COL,NLWest,1465
