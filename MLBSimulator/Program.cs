@@ -1,7 +1,7 @@
 ﻿using MLBSimulator;
 using System.Linq.Expressions;
 
-string version = "0.3";
+string version = "0.31";
 DateTime lastUpdated = new DateTime(2024, 1, 7);
 
 static void printVer(string ver, DateTime lastUpdate)
@@ -20,7 +20,7 @@ static Team[] populateTeams(string fileName, int numOfTeams)
     {
         string line = sr.ReadLine();
         string[] components = line.Split(',');
-        MLBTeams[count++] = new Team(components[0], components[1], components[3], components[2], Convert.ToInt32(components[4]));
+        MLBTeams[count++] = new Team(components[0], components[1], components[3], components[2], Convert.ToInt32(components[4]), components[5]);
     }
     return MLBTeams;
 }

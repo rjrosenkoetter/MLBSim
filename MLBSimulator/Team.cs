@@ -18,13 +18,16 @@ namespace MLBSimulator
 
         public int ELO { get; set; }
 
-        public Team(string cityName, string teamName, string division, string abr, int elo)
+        public string Rival { get; set; }
+
+        public Team(string cityName, string teamName, string division, string abr, int elo, string rival)
         {
             CityName = cityName;    
             TeamName = teamName;
             Division = division;
             Abbreviation = abr;
             ELO = elo;
+            Rival = rival;
         }
     }
 }
