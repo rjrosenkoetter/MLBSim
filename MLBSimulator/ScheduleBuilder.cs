@@ -32,15 +32,14 @@ namespace MLBSimulator
                 bool div1Active = true;
                 for(int j = 0; j < 30; j++)
                 {
-                    bool longLogic = false; // incomplete - need to refactor idea here
                     if (TeamArray[i].GamesRemaining[j] == 0 && i != j)
                     {
-                        if (TeamArray[i].Division == TeamArray[j].Division)
+                        if (TeamArray[i].Division == TeamArray[j].Division) // if they are in the same division..
                         {
                             TeamArray[i].GamesRemaining[j] = 13;
                             TeamArray[j].GamesRemaining[i] = 13;
                         }
-                        else if (TeamArray[i].Division[0] == TeamArray[j].Division[0])
+                        else if (TeamArray[i].Division[0] == TeamArray[j].Division[0]) // if they are in the same league (American League/National League)
                         {
                             if (TeamArray[i].FourGameSeries == 0 || TeamArray[j].FourGameSeries == 0)
                             {
@@ -51,8 +50,16 @@ namespace MLBSimulator
                             }
                             else
                             {
-                                int seriesLength = rand.Next(1, TeamArray[i].TotalSameLeagueSeries + 5);
-                                if (seriesLength <= TeamArray[i].FourGameSeries || longLogic)
+                                int start = 0;
+                                if (TeamArray[i].Division[0] == 'N') start = 15;
+                                int end = start + 15;
+                                int numOfTeamsLeft = 0;
+                                for(int k = start; k < end; k++)
+                                {
+                                    if (TeamArray[k].FourGameSeries != 0 && TeamArray[i].Division != TeamArray[k].Division) numOfTeamsLeft++;
+                                }
+                                int seriesLength = rand.Next(1, TeamArray[i].TotalSameLeagueSeries);
+                                if (seriesLength <= TeamArray[i].FourGameSeries || numOfTeamsLeft <= TeamArray[i].FourGameSeries)
                                 {
                                     TeamArray[i].GamesRemaining[j] = 7;
                                     TeamArray[j].GamesRemaining[i] = 7;
