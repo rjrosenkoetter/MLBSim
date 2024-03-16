@@ -52,14 +52,44 @@ namespace MLBSimulator
                             {
                                 int start = 0;
                                 if (TeamArray[i].Division[0] == 'N') start = 15;
-                                int end = start + 15;
-                                int numOfTeamsLeft = 0;
-                                for(int k = start; k < end; k++)
+
+                                int firstDivisionStop = ReturnFirstDivisionStop(TeamArray[i], start);
+                                int secondDivisionStop = ReturnSecondDivisionStop(TeamArray[i], start);
+                                bool inFirstDivision = false;
+                                if(j <= firstDivisionStop)
                                 {
-                                    if (TeamArray[k].FourGameSeries != 0 && TeamArray[i].Division != TeamArray[k].Division) numOfTeamsLeft++;
+                                    inFirstDivision = true;
+                                }
+                                int end = 0;
+                                if(inFirstDivision)
+                                {
+                                    end = firstDivisionStop + 1;
+                                }
+                                else
+                                {
+                                    end = secondDivisionStop + 1;
+                                }
+                                int numOfTeamsLeft = 0;
+                                int gamesForThisDivision = 0;
+                                if(inFirstDivision)
+                                {
+                                    gamesForThisDivision = TeamArray[i].FourGameSeries - 2;
+                                }
+                                else
+                                {
+                                    gamesForThisDivision = TeamArray[i].FourGameSeries;
+                                }
+                                bool otherTeamInFirstDivision = false;
+                                if (((TeamArray[j].Division[2] == 'C' || TeamArray[j].Division[2] == 'W') && TeamArray[i].Division[2] == 'E') || TeamArray[j].Division[2] == 'E' && TeamArray[i].Division[2] == 'C')
+                                {
+                                    otherTeamInFirstDivision = true;
+                                }
+                                for (int k = j; k < end; k++)
+                                {
+                                    if (TeamArray[k].FourGameSeries != 0) numOfTeamsLeft++;
                                 }
                                 int seriesLength = rand.Next(1, TeamArray[i].TotalSameLeagueSeries);
-                                if (seriesLength <= TeamArray[i].FourGameSeries || numOfTeamsLeft <= TeamArray[i].FourGameSeries)
+                                if ((seriesLength <= TeamArray[i].FourGameSeries || numOfTeamsLeft == gamesForThisDivision) && !DoneWithFirstDivision(TeamArray[i], j) && (TeamArray[j].GamesLeftWithFirstDivision != 0 || !otherTeamInFirstDivision))
                                 {
                                     TeamArray[i].GamesRemaining[j] = 7;
                                     TeamArray[j].GamesRemaining[i] = 7;
@@ -67,6 +97,14 @@ namespace MLBSimulator
                                     TeamArray[j].TotalSameLeagueSeries -= 1;
                                     TeamArray[i].FourGameSeries -= 1;
                                     TeamArray[j].FourGameSeries -= 1;
+                                    if(inFirstDivision)
+                                    {
+                                        TeamArray[i].GamesLeftWithFirstDivision -= 1;
+                                    }
+                                    if(otherTeamInFirstDivision)
+                                    {
+                                        TeamArray[j].GamesLeftWithFirstDivision -= 1;
+                                    }
                                 }
                                 else
                                 {
@@ -92,6 +130,48 @@ namespace MLBSimulator
             }
         }
 
+        public bool DoneWithFirstDivision(Team team, int currentNum)
+        {
+            int boost = 0;
+            if(team.Division[0] == 'N')
+            {
+                boost += 15;
+            }
+            int firstDivisionStop = ReturnFirstDivisionStop(team, boost);
+
+            if(currentNum <= firstDivisionStop && team.FourGameSeries == 2)
+            {
+                return true;
+            }
+            return false;
+        }
+        public int ReturnFirstDivisionStop(Team team, int boost)
+        {
+            int firstDivisionStop = boost;
+            if (team.Division[2] == 'E')
+            {
+                firstDivisionStop += 9;
+            }
+            else
+            {
+                firstDivisionStop += 4;
+            }
+            return firstDivisionStop;
+        }
+
+        public int ReturnSecondDivisionStop(Team team, int boost)
+        {
+            int secondDivisionStop = boost;
+            if (team.Division[2] == 'W')
+            {
+                secondDivisionStop += 9;
+            }
+            else
+            {
+                secondDivisionStop += 14;
+            }
+            return secondDivisionStop;
+        }
         public string[,] BuildSchedule()
         {
             string[,] schedule = new string[TeamArray.Length, 200];
