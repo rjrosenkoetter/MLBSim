@@ -55,11 +55,7 @@ namespace MLBSimulator
 
                                 int firstDivisionStop = ReturnFirstDivisionStop(TeamArray[i], start);
                                 int secondDivisionStop = ReturnSecondDivisionStop(TeamArray[i], start);
-                                bool inFirstDivision = false;
-                                if(j <= firstDivisionStop)
-                                {
-                                    inFirstDivision = true;
-                                }
+                                bool inFirstDivision = j <= firstDivisionStop;
                                 int end = 0;
                                 if(inFirstDivision)
                                 {
@@ -84,12 +80,20 @@ namespace MLBSimulator
                                 {
                                     otherTeamInFirstDivision = true;
                                 }
+                                bool isSecondToLastTeamInDiv = i % 5 == 3;
+                                int forcedTeam = -1;
                                 for (int k = j; k < end; k++)
                                 {
-                                    if (TeamArray[k].FourGameSeries != 0) numOfTeamsLeft++;
+                                    if (TeamArray[k].GamesLeftWithFirstDivision != 0 && otherTeamInFirstDivision) numOfTeamsLeft++;
+                                    else if (TeamArray[k].FourGameSeries != 0 && !otherTeamInFirstDivision) numOfTeamsLeft++;
+
+                                    if(isSecondToLastTeamInDiv && ((TeamArray[k].GamesLeftWithFirstDivision == 2 && otherTeamInFirstDivision) || TeamArray[k].FourGameSeries == 2 && !otherTeamInFirstDivision))
+                                    {
+                                        forcedTeam = k;
+                                    }
                                 }
                                 int seriesLength = rand.Next(1, TeamArray[i].TotalSameLeagueSeries);
-                                if ((seriesLength <= TeamArray[i].FourGameSeries || numOfTeamsLeft == gamesForThisDivision) && !DoneWithFirstDivision(TeamArray[i], j) && (TeamArray[j].GamesLeftWithFirstDivision != 0 || !otherTeamInFirstDivision))
+                                if (((seriesLength <= TeamArray[i].FourGameSeries || numOfTeamsLeft == gamesForThisDivision || forcedTeam == j) && !(gamesForThisDivision == 1 && forcedTeam != -1 && j != forcedTeam)) && !DoneWithFirstDivision(TeamArray[i], j) && (TeamArray[j].GamesLeftWithFirstDivision != 0 || !otherTeamInFirstDivision))
                                 {
                                     TeamArray[i].GamesRemaining[j] = 7;
                                     TeamArray[j].GamesRemaining[i] = 7;
