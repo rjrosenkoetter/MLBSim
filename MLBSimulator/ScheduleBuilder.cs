@@ -36,17 +36,13 @@ namespace MLBSimulator
                     {
                         if (TeamArray[i].Division == TeamArray[j].Division) // if they are in the same division..
                         {
-                            TeamArray[i].GamesRemaining[j] = 13;
-                            TeamArray[j].GamesRemaining[i] = 13;
+                            SetGamesRemainingArray(i, j, 13, 0, 0);
                         }
                         else if (TeamArray[i].Division[0] == TeamArray[j].Division[0]) // if they are in the same league (American League/National League)
                         {
                             if (TeamArray[i].FourGameSeries == 0 || TeamArray[j].FourGameSeries == 0)
                             {
-                                TeamArray[i].GamesRemaining[j] = 6;
-                                TeamArray[j].GamesRemaining[i] = 6;
-                                TeamArray[i].TotalSameLeagueSeries -= 1;
-                                TeamArray[j].TotalSameLeagueSeries -= 1;
+                                SetGamesRemainingArray(i, j, 6, 1, 0);
                             }
                             else
                             {
@@ -95,12 +91,7 @@ namespace MLBSimulator
                                 int seriesLength = rand.Next(1, TeamArray[i].TotalSameLeagueSeries);
                                 if (((seriesLength <= TeamArray[i].FourGameSeries || numOfTeamsLeft == gamesForThisDivision || forcedTeam == j) && !(gamesForThisDivision == 1 && forcedTeam != -1 && j != forcedTeam)) && !DoneWithFirstDivision(TeamArray[i], j) && (TeamArray[j].GamesLeftWithFirstDivision != 0 || !otherTeamInFirstDivision))
                                 {
-                                    TeamArray[i].GamesRemaining[j] = 7;
-                                    TeamArray[j].GamesRemaining[i] = 7;
-                                    TeamArray[i].TotalSameLeagueSeries -= 1;
-                                    TeamArray[j].TotalSameLeagueSeries -= 1;
-                                    TeamArray[i].FourGameSeries -= 1;
-                                    TeamArray[j].FourGameSeries -= 1;
+                                    SetGamesRemainingArray(i, j, 7, 1, 1);
                                     if(inFirstDivision)
                                     {
                                         TeamArray[i].GamesLeftWithFirstDivision -= 1;
@@ -112,28 +103,42 @@ namespace MLBSimulator
                                 }
                                 else
                                 {
-                                    TeamArray[i].GamesRemaining[j] = 6;
-                                    TeamArray[j].GamesRemaining[i] = 6;
-                                    TeamArray[i].TotalSameLeagueSeries -= 1;
-                                    TeamArray[j].TotalSameLeagueSeries -= 1;
+                                    SetGamesRemainingArray(i, j, 6, 1, 0);
                                 }
                             }
                         }
                         else if (TeamArray[i].Rival == TeamArray[j].Abbreviation)
                         {
-                            TeamArray[i].GamesRemaining[j] = 4;
-                            TeamArray[j].GamesRemaining[i] = 4;
+                            SetGamesRemainingArray(i, j, 4, 0, 0);
                         }
                         else
                         {
-                            TeamArray[i].GamesRemaining[j] = 3;
-                            TeamArray[j].GamesRemaining[i] = 3;
+                            SetGamesRemainingArray(i, j, 3, 0, 0);
                         }
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// This method reduces duplicate code by setting the GamesRemaining and its associated properties in one place.
+        /// This method will be called whenever the logic has finished and the program has determined how many games and
+        /// if there are any intraleague considerations.
+        /// </summary>
+        /// <param name="index1">The index of the first team</param>
+        /// <param name="index2">The index of the second team</param>
+        /// <param name="gamesRemaining">Setting the specific index of the gamesRemaining array</param>
+        /// <param name="totalSameLeagueSeries">Modifying this team's amount of remaining intraleague series if needed</param>
+        /// <param name="fourGameSeries">Modifying this team's amount of remaining four game series if needed</param>
+        public void SetGamesRemainingArray(int index1, int index2, int gamesRemaining,  int totalSameLeagueSeries, int fourGameSeries)
+        {
+            TeamArray[index1].GamesRemaining[index2] = gamesRemaining;
+            TeamArray[index2].GamesRemaining[index1] = gamesRemaining;
+            TeamArray[index1].TotalSameLeagueSeries -= totalSameLeagueSeries;
+            TeamArray[index2].TotalSameLeagueSeries -= totalSameLeagueSeries;
+            TeamArray[index1].FourGameSeries -= fourGameSeries;
+            TeamArray[index2].FourGameSeries -= fourGameSeries;
+        }
         public bool DoneWithFirstDivision(Team team, int currentNum)
         {
             int boost = 0;

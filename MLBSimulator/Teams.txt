@@ -21,7 +21,7 @@ Washington,Nationals,WAS,NLEast,1460,BAL,19
 Milwaukee,Brewers,MIL,NLCentral,1530,MIN,20
 Chicago,Cubs,CHC,NLCentral,1500,CWS,21
 Cincinnati,Reds,CIN,NLCentral,1510,CLE,22
-Pittsburgh,Pirates,PIT,NLCentral,1475,PIT,23
+Pittsburgh,Pirates,PIT,NLCentral,1475,DET,23
 St. Louis,Cardinals,STL,NLCentral,1465,KCR,24
 Los Angeles,Dodgers,LAD,NLWest,1575,LAA,25
 Arizona,Diamondbacks,ARI,NLWest,1530,TEX,26
