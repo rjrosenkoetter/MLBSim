@@ -258,14 +258,7 @@ namespace MLBSimulator
             {
                 Random rand = new Random();
                 int randomNumber = rand.Next(1, gamesRemaining / 3 + 1);
-                if(randomNumber == 1)
-                {
-                    return 4;
-                }
-                else
-                {
-                    return 3;
-                }
+                return randomNumber == 1 ? 4 : 3;
             }
         }
     }
