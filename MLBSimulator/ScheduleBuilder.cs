@@ -183,8 +183,90 @@ namespace MLBSimulator
         }
         public string[,] BuildSchedule()
         {
-            string[,] schedule = new string[TeamArray.Length, 200];
+            int teamArrayLength = TeamArray.Length;
+            string[,] schedule = new string[teamArrayLength, 200];
+            bool[] temporaryTeamArray = new bool[teamArrayLength];
+            int day = 0;
+            int opposingTeam; int seriesLength;
+            while(true)
+            {
+                temporaryTeamArray = new bool[teamArrayLength];
+                for(int i = 0; i < teamArrayLength; i++)
+                {
+                    if (!temporaryTeamArray[i])
+                    {
+                        (opposingTeam, seriesLength) = FindSeries(TeamArray[i], temporaryTeamArray, i);
+                        for(int k = day; k < seriesLength + day; k++)
+                        {
+                            schedule[i, k] = TeamArray[opposingTeam].Abbreviation;
+                            schedule[opposingTeam, k] = TeamArray[i].Abbreviation;
+                        }
+                        temporaryTeamArray[i] = true;
+                        temporaryTeamArray[opposingTeam] = true;
+                    }
+                }
+                break;
+            }
             return schedule;
+        }
+
+        public (int, int) FindSeries(Team searchingTeam, bool[] tempTeamArray, int teamNumber)
+        {
+            int gamesLeft = searchingTeam.GamesRemaining.Sum();
+            Random rand = new Random();
+            int randomGame = rand.Next(1, gamesLeft + 1);
+            int gameSum = 0;
+            int seriesLength = 0;
+            for(int i = 0; i < searchingTeam.GamesRemaining.Length; i++)
+            {
+                gameSum += searchingTeam.GamesRemaining[i];
+                if(gameSum >= randomGame)
+                {
+                    if (tempTeamArray[i])
+                    {
+                        int j = i;
+                        while (tempTeamArray[j] || searchingTeam.GamesRemaining[j] == 0 || teamNumber == j)
+                        {
+                            if(j + 1 == searchingTeam.GamesRemaining.Length)
+                            {
+                                j = 0;
+                            }
+                            else
+                            {
+                                j++;
+                            }
+                        }
+
+                        return (j, CalculateSeriesLength(searchingTeam.GamesRemaining[j]));
+                    }
+                    else
+                    {
+                        return (i, CalculateSeriesLength(searchingTeam.GamesRemaining[i]));
+                    }
+                }
+            }
+            return (-1, -1);
+        }
+
+        public int CalculateSeriesLength(int gamesRemaining)
+        {
+            if(gamesRemaining % 3 == 0)
+            {
+                return 3;
+            }
+            else
+            {
+                Random rand = new Random();
+                int randomNumber = rand.Next(1, gamesRemaining / 3 + 1);
+                if(randomNumber == 1)
+                {
+                    return 4;
+                }
+                else
+                {
+                    return 3;
+                }
+            }
         }
     }
 }

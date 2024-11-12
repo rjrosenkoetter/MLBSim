@@ -1,8 +1,8 @@
 ﻿using MLBSimulator;
 using System.Linq.Expressions;
 
-string version = "0.5.1";
-DateTime lastUpdated = new DateTime(2024, 11, 4);
+string version = "0.5.2";
+DateTime lastUpdated = new DateTime(2024, 11, 11);
 
 static void printVer(string ver, DateTime lastUpdate)
 {
@@ -31,10 +31,10 @@ int errors = 0;
 for(int z = 0; z < 500; z++)
 {
     error = false;
-    ScheduleBuilder builder = new ScheduleBuilder(@"..\..\..\Teams.txt");
+    ScheduleBuilder builder2 = new ScheduleBuilder(@"..\..\..\Teams.txt");
     for (int i = 0; i < 30; i++)
     {
-        if (builder.TeamArray[i].GamesRemaining.Sum() != 162)
+        if (builder2.TeamArray[i].GamesRemaining.Sum() != 162)
         {
             error = true;
         }
@@ -42,3 +42,5 @@ for(int z = 0; z < 500; z++)
     if (error) errors++;
 }
 Console.WriteLine(errors);
+ScheduleBuilder builder = new ScheduleBuilder(@"..\..\..\Teams.txt");
+builder.BuildSchedule();
