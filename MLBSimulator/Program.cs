@@ -42,5 +42,13 @@ for(int z = 0; z < 500; z++)
     if (error) errors++;
 }
 Console.WriteLine(errors);
-ScheduleBuilder builder = new ScheduleBuilder(@"..\..\..\Teams.txt");
-builder.BuildSchedule();
+int sum = 0;
+int day; 
+string[,] schedule;
+for(int zz = 0; zz < 500; zz++)
+{
+    ScheduleBuilder builder = new ScheduleBuilder(@"..\..\..\Teams.txt");
+    (schedule, day) = builder.BuildSchedule();
+    sum += day;
+}
+System.Console.WriteLine(sum / 500);

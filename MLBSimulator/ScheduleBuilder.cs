@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -181,33 +182,66 @@ namespace MLBSimulator
             }
             return secondDivisionStop;
         }
-        public string[,] BuildSchedule()
+        public (string[,], int) BuildSchedule()
         {
             int teamArrayLength = TeamArray.Length;
             string[,] schedule = new string[teamArrayLength, 200];
             bool[] temporaryTeamArray = new bool[teamArrayLength];
             int day = 0;
             int opposingTeam; int seriesLength;
-            while(true)
+            Random rand = new Random();
+            while(day < 162 || !IsScheduleComplete())
             {
                 temporaryTeamArray = new bool[teamArrayLength];
-                for(int i = 0; i < teamArrayLength; i++)
+                for(int teams = 0; teams < temporaryTeamArray.Length; teams++)
                 {
-                    if (!temporaryTeamArray[i])
+                    temporaryTeamArray[teams] = schedule[teams, day] != null;
+                    if(day > 161 && TeamArray[teams].GamesRemaining.Sum() == 0)
                     {
-                        (opposingTeam, seriesLength) = FindSeries(TeamArray[i], temporaryTeamArray, i);
-                        for(int k = day; k < seriesLength + day; k++)
-                        {
-                            schedule[i, k] = TeamArray[opposingTeam].Abbreviation;
-                            schedule[opposingTeam, k] = TeamArray[i].Abbreviation;
-                        }
-                        temporaryTeamArray[i] = true;
-                        temporaryTeamArray[opposingTeam] = true;
+                        temporaryTeamArray[teams] = true;
                     }
                 }
-                break;
+                int currentTeam = rand.Next(0, teamArrayLength);
+                for(int i = 0; i < teamArrayLength; i++)
+                {
+                    if (!temporaryTeamArray[currentTeam])
+                    {
+                        (opposingTeam, seriesLength) = FindSeries(TeamArray[currentTeam], temporaryTeamArray, currentTeam);
+                        if(seriesLength == -1)
+                        {
+                            break;
+                        }
+                        for(int k = day; k < seriesLength + day; k++)
+                        {
+                            schedule[currentTeam, k] = TeamArray[opposingTeam].Abbreviation;
+                            schedule[opposingTeam, k] = TeamArray[currentTeam].Abbreviation;
+                        }
+                        TeamArray[currentTeam].GamesRemaining[opposingTeam] -= seriesLength;
+                        TeamArray[opposingTeam].GamesRemaining[currentTeam] -= seriesLength;
+                        temporaryTeamArray[currentTeam] = true;
+                        temporaryTeamArray[opposingTeam] = true;
+                    }
+                    currentTeam++;
+                    if(currentTeam >= teamArrayLength)
+                    {
+                        currentTeam = 0;
+                    }
+                }
+                day++;
             }
-            return schedule;
+            return (schedule, day);
+        }
+
+        public bool IsScheduleComplete()
+        {
+            for(int i = 0; i < TeamArray.Length; i++)
+            {
+                if (TeamArray[i].GamesRemaining.Sum() != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public (int, int) FindSeries(Team searchingTeam, bool[] tempTeamArray, int teamNumber)
@@ -222,6 +256,10 @@ namespace MLBSimulator
                 gameSum += searchingTeam.GamesRemaining[i];
                 if(gameSum >= randomGame)
                 {
+                    if (!CheckIfAvailableGame(searchingTeam, tempTeamArray)) 
+                    {
+                        return (-1, -1);
+                    }
                     if (tempTeamArray[i])
                     {
                         int j = i;
@@ -246,6 +284,18 @@ namespace MLBSimulator
                 }
             }
             return (-1, -1);
+        }
+
+        public bool CheckIfAvailableGame(Team team, bool[] tempTeamArray)
+        {
+            for(int i = 0; i < tempTeamArray.Length; i++)
+            {
+                if (!tempTeamArray[i] && team.GamesRemaining[i] != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public int CalculateSeriesLength(int gamesRemaining)
