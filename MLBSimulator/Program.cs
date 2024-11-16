@@ -1,8 +1,8 @@
 ﻿using MLBSimulator;
 using System.Linq.Expressions;
 
-string version = "0.5.2";
-DateTime lastUpdated = new DateTime(2024, 11, 11);
+string version = "0.5.3";
+DateTime lastUpdated = new DateTime(2024, 11, 16);
 
 static void printVer(string ver, DateTime lastUpdate)
 {
