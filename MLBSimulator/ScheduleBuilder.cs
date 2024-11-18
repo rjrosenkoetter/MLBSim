@@ -188,30 +188,22 @@ namespace MLBSimulator
             string[,] schedule = new string[teamArrayLength, 210];
             bool[] temporaryTeamArray = new bool[teamArrayLength];
             int day = 0;
-            int opposingTeam; int seriesLength;
+            int opposingTeam; int seriesLength; int whenToSchedule;
             Random rand = new Random();
             while(day < 162 || !IsScheduleComplete())
             {
-                temporaryTeamArray = new bool[teamArrayLength];
-                for(int teams = 0; teams < temporaryTeamArray.Length; teams++)
-                {
-                    temporaryTeamArray[teams] = schedule[teams, day] != null;
-                    if(day > 161 && TeamArray[teams].GamesRemaining.Sum() == 0)
-                    {
-                        temporaryTeamArray[teams] = true;
-                    }
-                }
+                temporaryTeamArray = FindTempArray(schedule, day);
                 int currentTeam = rand.Next(0, teamArrayLength);
                 for(int i = 0; i < teamArrayLength; i++)
                 {
                     if (!temporaryTeamArray[currentTeam])
                     {
-                        (opposingTeam, seriesLength) = FindSeries(TeamArray[currentTeam], temporaryTeamArray, currentTeam);
+                        (opposingTeam, seriesLength, whenToSchedule) = FindSeries(TeamArray[currentTeam], temporaryTeamArray, currentTeam, day, schedule);
                         if(seriesLength == -1)
                         {
                             break;
                         }
-                        for(int k = day; k < seriesLength + day; k++)
+                        for(int k = whenToSchedule; k < seriesLength + whenToSchedule; k++)
                         {
                             schedule[currentTeam, k] = TeamArray[opposingTeam].Abbreviation;
                             schedule[opposingTeam, k] = TeamArray[currentTeam].Abbreviation;
@@ -244,7 +236,7 @@ namespace MLBSimulator
             return true;
         }
 
-        public (int, int) FindSeries(Team searchingTeam, bool[] tempTeamArray, int teamNumber)
+        public (int, int, int) FindSeries(Team searchingTeam, bool[] tempTeamArray, int teamNumber, int day, string[,] schedule)
         {
             int gamesLeft = searchingTeam.GamesRemaining.Sum();
             Random rand = new Random();
@@ -258,7 +250,7 @@ namespace MLBSimulator
                 {
                     if (!CheckIfAvailableGame(searchingTeam, tempTeamArray)) 
                     {
-                        return (-1, -1);
+                        return FindSeries(searchingTeam, FindTempArray(schedule, day + 1), teamNumber, day + 1, schedule);
                     }
                     if (tempTeamArray[i])
                     {
@@ -275,15 +267,29 @@ namespace MLBSimulator
                             }
                         }
 
-                        return (j, CalculateSeriesLength(searchingTeam.GamesRemaining[j]));
+                        return (j, CalculateSeriesLength(searchingTeam.GamesRemaining[j]), day);
                     }
                     else
                     {
-                        return (i, CalculateSeriesLength(searchingTeam.GamesRemaining[i]));
+                        return (i, CalculateSeriesLength(searchingTeam.GamesRemaining[i]), day);
                     }
                 }
             }
-            return (-1, -1);
+            return (-1, -1, day);
+        }
+
+        public bool[] FindTempArray(string[,] schedule, int day)
+        {
+            bool[] temporaryTeamArray = new bool[30];
+            for (int teams = 0; teams < temporaryTeamArray.Length; teams++)
+            {
+                temporaryTeamArray[teams] = schedule[teams, day] != null;
+                if (day > 161 && TeamArray[teams].GamesRemaining.Sum() == 0)
+                {
+                    temporaryTeamArray[teams] = true;
+                }
+            }
+            return temporaryTeamArray;
         }
 
         public bool CheckIfAvailableGame(Team team, bool[] tempTeamArray)

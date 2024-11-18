@@ -1,7 +1,7 @@
 ﻿using MLBSimulator;
 using System.Linq.Expressions;
 
-string version = "0.5.4";
+string version = "0.6.0";
 DateTime lastUpdated = new DateTime(2024, 11, 18);
 
 static void printVer(string ver, DateTime lastUpdate)
@@ -45,10 +45,16 @@ Console.WriteLine(errors);
 int sum = 0;
 int day; 
 string[,] schedule;
+int longestSchedule = 0;
 for(int zz = 0; zz < 5000; zz++)
 {
     ScheduleBuilder builder = new ScheduleBuilder(@"..\..\..\Teams.txt");
     (schedule, day) = builder.BuildSchedule();
     sum += day;
+    if (day > longestSchedule)
+    {
+        longestSchedule = day;
+    }
 }
 System.Console.WriteLine(sum / 5000);
+System.Console.WriteLine(longestSchedule);
