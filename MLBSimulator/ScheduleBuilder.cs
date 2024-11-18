@@ -185,7 +185,7 @@ namespace MLBSimulator
         public (string[,], int) BuildSchedule()
         {
             int teamArrayLength = TeamArray.Length;
-            string[,] schedule = new string[teamArrayLength, 200];
+            string[,] schedule = new string[teamArrayLength, 210];
             bool[] temporaryTeamArray = new bool[teamArrayLength];
             int day = 0;
             int opposingTeam; int seriesLength;
