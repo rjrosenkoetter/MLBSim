@@ -284,6 +284,16 @@ namespace MLBSimulator
             for (int teams = 0; teams < temporaryTeamArray.Length; teams++)
             {
                 temporaryTeamArray[teams] = schedule[teams, day] != null;
+                if (!temporaryTeamArray[teams]) 
+                {
+                    for (int i = 0; i < 11; i++)
+                    {
+                        if (schedule[teams, i + day] != null)
+                        {
+                            temporaryTeamArray[teams] = true;
+                        }
+                    }
+                }
                 if (day > 161 && TeamArray[teams].GamesRemaining.Sum() == 0)
                 {
                     temporaryTeamArray[teams] = true;
