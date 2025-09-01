@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MLBSimulator
 {
     // This class will include the necessary tools to build the schedule of an MLB season.
-    // Currently will only build a schedule based on the real 2024 schedule building process
+    // Currently will only build a schedule based on the real 2025 schedule building process
     // and only accept 30 teams in the team list.
     public class ScheduleBuilder
     {

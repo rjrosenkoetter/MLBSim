@@ -1,30 +1,30 @@
-New York,Yankees,NYY,ALEast,1520,NYM,00
-Boston,Red Sox,BOS,ALEast,1510,ATL,01
+New York,Yankees,NYY,ALEast,1540,NYM,00
+Boston,Red Sox,BOS,ALEast,1530,ATL,01
 Toronto,Blue Jays,TOR,ALEast,1535,PHI,02
-Tampa Bay,Rays,TBR,ALEast,1540,MIA,03
-Baltimore,Orioles,BAL,ALEast,1548,WAS,04
-Minnesota,Twins,MIN,ALCentral,1525,MIL,05
-Detroit,Tigers,DET,ALCentral,1495,PIT,06
-Chicago,White Sox,CWS,ALCentral,1450,CHC,07
-Cleveland,Guardians,CLE,ALCentral,1485,CIN,08
-Kansas City,Royals,KCR,ALCentral,1475,STL,09
-Texas,Rangers,TEX,ALWest,1550,ARI,10
-Houston,Astros,HOU,ALWest,1550,COL,11
+Tampa Bay,Rays,TBR,ALEast,1500,MIA,03
+Baltimore,Orioles,BAL,ALEast,1490,WAS,04
+Minnesota,Twins,MIN,ALCentral,1475,MIL,05
+Detroit,Tigers,DET,ALCentral,1550,PIT,06
+Chicago,White Sox,CWS,ALCentral,1440,CHC,07
+Cleveland,Guardians,CLE,ALCentral,1505,CIN,08
+Kansas City,Royals,KCR,ALCentral,1505,STL,09
+Texas,Rangers,TEX,ALWest,1515,ARI,10
+Houston,Astros,HOU,ALWest,1535,COL,11
 Seattle,Mariners,SEA,ALWest,1525,SDP,12
-Los Angeles,Angels,LAA,ALWest,1460,LAD,13
-Oakland,Athletics,OAK,ALWest,1440,SFG,14
-Atlanta,Braves,ATL,NLEast,1560,BOS,15
-Philadelphia,Phillies,PHI,NLEast,1540,TOR,16
-New York,Mets,NYM,NLEast,1510,NYY,17
-Miami,Marlins,MIA,NLEast,1505,TBR,18
-Washington,Nationals,WAS,NLEast,1460,BAL,19
-Milwaukee,Brewers,MIL,NLCentral,1530,MIN,20
-Chicago,Cubs,CHC,NLCentral,1500,CWS,21
-Cincinnati,Reds,CIN,NLCentral,1510,CLE,22
-Pittsburgh,Pirates,PIT,NLCentral,1475,DET,23
-St. Louis,Cardinals,STL,NLCentral,1465,KCR,24
-Los Angeles,Dodgers,LAD,NLWest,1575,LAA,25
-Arizona,Diamondbacks,ARI,NLWest,1530,TEX,26
-San Diego,Padres,SDP,NLWest,1530,SEA,27
+Los Angeles,Angels,LAA,ALWest,1470,LAD,13
+Sacramento,Athletics,ATH,ALWest,1450,SFG,14
+Atlanta,Braves,ATL,NLEast,1500,BOS,15
+Philadelphia,Phillies,PHI,NLEast,1545,TOR,16
+New York,Mets,NYM,NLEast,1535,NYY,17
+Miami,Marlins,MIA,NLEast,1480,TBR,18
+Washington,Nationals,WAS,NLEast,1450,BAL,19
+Milwaukee,Brewers,MIL,NLCentral,1555,MIN,20
+Chicago,Cubs,CHC,NLCentral,1540,CWS,21
+Cincinnati,Reds,CIN,NLCentral,1505,CLE,22
+Pittsburgh,Pirates,PIT,NLCentral,1460,DET,23
+St. Louis,Cardinals,STL,NLCentral,1485,KCR,24
+Los Angeles,Dodgers,LAD,NLWest,1565,LAA,25
+Arizona,Diamondbacks,ARI,NLWest,1500,TEX,26
+San Diego,Padres,SDP,NLWest,1540,SEA,27
 San Francisco,Giants,SFG,NLWest,1490,OAK,28
-Colorado,Rockies,COL,NLWest,1465,HOU,29
+Colorado,Rockies,COL,NLWest,1430,H
