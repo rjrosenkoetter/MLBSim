@@ -27,4 +27,4 @@ Los Angeles,Dodgers,LAD,NLWest,1565,LAA,25
 Arizona,Diamondbacks,ARI,NLWest,1500,TEX,26
 San Diego,Padres,SDP,NLWest,1540,SEA,27
 San Francisco,Giants,SFG,NLWest,1490,OAK,28
-Colorado,Rockies,COL,NLWest,1430,H
+Colorado,Rockies,COL,NLWest,1430,HOU,29
