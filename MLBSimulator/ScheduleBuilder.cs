@@ -66,7 +66,7 @@ namespace MLBSimulator
                                 int gamesForThisDivision = 0;
                                 if(inFirstDivision)
                                 {
-                                    gamesForThisDivision = TeamArray[i].FourGameSeries - 2;
+                                    gamesForThisDivision = TeamArray[i].FourGameSeries - 1;
                                 }
                                 else
                                 {
@@ -84,7 +84,7 @@ namespace MLBSimulator
                                     if (TeamArray[k].GamesLeftWithFirstDivision != 0 && otherTeamInFirstDivision) numOfTeamsLeft++;
                                     else if (TeamArray[k].FourGameSeries != 0 && !otherTeamInFirstDivision) numOfTeamsLeft++;
 
-                                    if(isSecondToLastTeamInDiv && ((TeamArray[k].GamesLeftWithFirstDivision == 2 && otherTeamInFirstDivision) || TeamArray[k].FourGameSeries == 2 && !otherTeamInFirstDivision))
+                                    if(isSecondToLastTeamInDiv && ((TeamArray[k].GamesLeftWithFirstDivision == 1 && otherTeamInFirstDivision) || TeamArray[k].FourGameSeries == 1 && !otherTeamInFirstDivision))
                                     {
                                         forcedTeam = k;
                                     }
@@ -110,7 +110,7 @@ namespace MLBSimulator
                         }
                         else if (TeamArray[i].Rival == TeamArray[j].Abbreviation)
                         {
-                            SetGamesRemainingArray(i, j, 4, 0, 0);
+                            SetGamesRemainingArray(i, j, 6, 0, 0);
                         }
                         else
                         {
@@ -149,7 +149,7 @@ namespace MLBSimulator
             }
             int firstDivisionStop = ReturnFirstDivisionStop(team, boost);
 
-            if(currentNum <= firstDivisionStop && team.FourGameSeries == 2)
+            if(currentNum <= firstDivisionStop && team.FourGameSeries == 1)
             {
                 return true;
             }

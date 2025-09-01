@@ -20,11 +20,11 @@ namespace MLBSimulator
 
         public string Rival { get; set; }
 
-        public int FourGameSeries { get; set; } = 4;
+        public int FourGameSeries { get; set; } = 2;
 
         public int TotalSameLeagueSeries { get; set; } = 10;
 
-        public int GamesLeftWithFirstDivision { get; set; } = 2;
+        public int GamesLeftWithFirstDivision { get; set; } = 1;
         public int[] GamesRemaining { get; set; } = new int[30];
 
         public string TeamCode { get; set; }
